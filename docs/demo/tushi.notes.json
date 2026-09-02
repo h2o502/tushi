@@ -1,0 +1,40 @@
+{
+  "notes": [
+    {
+      "key": "图示 tushi",
+      "mode": "contains",
+      "title": "图示 tushi（AI 编排层）",
+      "body": "就是这套 skill 本身。它不自己画图，只负责调度：让 LLM 理解内容、让 PlantUML 排版、让 viewer 做交互。每个环节只干自己最强的事。"
+    },
+    {
+      "key": "LLM",
+      "mode": "prefix",
+      "title": "LLM 内容理解",
+      "body": "LLM 的强项是理解，不是排版。所以它只做两件事：把内容写成 PlantUML 源码（母语级 DSL，一次成型），同时写一份白话注释 sidecar——就是你点开的这种浮层。"
+    },
+    {
+      "key": "PlantUML 引擎",
+      "mode": "prefix",
+      "title": "PlantUML 确定性渲染",
+      "body": "二十年打磨的渲染引擎，本地 CPU 免费、毫秒级。关键特性是确定性：同样的输入永远得到同样的图，这是 AI 直出图片做不到的。渲染失败时错误会喂回 LLM 修正，最多 3 轮。"
+    },
+    {
+      "key": "puml-viewer",
+      "mode": "prefix",
+      "title": "puml-viewer 交互层",
+      "body": "自研的约 15KB 纯前端引擎。热区自动绑定 SVG 文本、白话浮层智能定位、工具栏缩放。零依赖零请求，所以拼出来的单文件发给谁都能打开。"
+    },
+    {
+      "key": "读者",
+      "mode": "prefix",
+      "title": "读者",
+      "body": "交付物的最终用户。不需要装任何东西，浏览器打开 index.html 就能看图、点元素、问「这是什么」。静态架构图只能看，这张图能「点着问」。"
+    },
+    {
+      "key": "index.html",
+      "mode": "contains",
+      "title": "单文件交付物",
+      "body": "SVG 底图 + notes 数据 + viewer 引擎全部内嵌在一个 HTML 里。零网络请求、零外部依赖。对应的 .puml 是纯文本，git 可 diff，手改一行重渲染。"
+    }
+  ]
+}

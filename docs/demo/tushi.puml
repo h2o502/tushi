@@ -1,0 +1,51 @@
+@startuml
+skinparam defaultFontName Noto Sans CJK SC
+skinparam backgroundColor #FDFBF7
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #8B7355
+skinparam ArrowFontSize 12
+
+title 图示 tushi 自举图 — 用图示画图示本身
+
+actor "用户" as user #F5E6D3
+participant "图示 tushi\n（AI 编排层）" as tushi #F0DBB5
+participant "LLM\n内容理解" as llm #E8D5C4
+participant "PlantUML 引擎\n确定性渲染" as engine #DCE8DC
+participant "puml-viewer\n交互层拼装" as viewer #D8E4F0
+participant "读者\n（点开 index.html 的人）" as reader #F5E6D3
+
+user -> tushi : 给我画一张图\n（文档/代码/口头描述）
+activate tushi
+tushi -> llm : ① 理解内容，选图类型\n（时序/组件/状态/ER/思维导图…）
+activate llm
+llm --> tushi : ② 产出 .puml 源码\n（结构化映射，不改写不发明）
+llm --> tushi : ③ 产出 .notes.json 白话注释\n（锚点=节点名，正文=大白话）
+deactivate llm
+
+tushi -> engine : ④ 渲染 puml → SVG
+activate engine
+alt 渲染成功
+  engine --> tushi : SVG 底图（同输入同输出，可复现）
+else 渲染失败
+  engine --> tushi : 报错信息
+  tushi -> llm : 错误喂回修正（最多 3 轮）
+end
+deactivate engine
+
+tushi -> viewer : ⑤ SVG + notes + 引擎\n拼装单文件 index.html
+activate viewer
+viewer --> tushi : 零依赖交互页面
+deactivate viewer
+
+tushi --> user : ⑥ 交付 index.html\n（本地双击 / 部署成 URL 均可）
+deactivate tushi
+
+user -> reader : 转发给任何人
+reader -> reader : 点击图中元素\n弹出「是什么/为什么/关键决策」
+
+note over tushi, viewer
+  你现在看到的这张图，本身就是这条管线的产物
+  （本图的 .puml / .notes.json / .svg 与 index.html 同目录归档）
+end note
+@enduml
