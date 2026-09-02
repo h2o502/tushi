@@ -3,7 +3,7 @@ slug: "tushi"
 name: "tushi"
 displayName: "图示"
 description: "把复杂逻辑画成可交互的架构图/流程图/时序图。当用户需要可视化系统结构、梳理流程、画 ER 图/组件图/状态图/思维导图时使用。"
-version: "1.1.0"
+version: "1.2.0"
 license: "MIT"
 ---
 
@@ -23,7 +23,7 @@ license: "MIT"
 1. 判断用户要画什么类型的图，不明确时直接询问
 2. 写 `.puml` 源文件和 `.notes.json`
 3. 调用 `tushi.py` 渲染；失败时把 PlantUML 报错喂回 LLM 修正，最多 3 轮
-4. 交付 `index.html` 的访问路径或文件位置
+4. 交付 `index.html` 的文件路径。用平台预览工具展示（如有），否则告诉用户路径本地打开。禁止启动 HTTP 服务、禁止给 localhost/内网 IP。
 
 ## notes JSON 格式
 
@@ -45,6 +45,15 @@ license: "MIT"
 单文件 `index.html`：内嵌 SVG 底图 + notes 数据 + viewer 引擎。零网络请求、零外部依赖，本地双击打开 / 部署成 URL 均可。
 
 用户交互：点击热区看白话浮层，工具栏缩放（默认原始宽度自由画布）+ 高亮点位。
+
+## 交付方式（强制）
+
+1. 渲染完成后，给用户 index.html 的文件路径
+2. 如 AI 平台有文件预览功能（如 Trae OpenPreview），直接展示
+3. 如无预览功能，告诉用户文件路径，本地双击打开
+4. **禁止**：启动 HTTP 服务（python -m http.server 等）
+5. **禁止**：给 localhost / 127.0.0.1 / 内网 IP 地址
+6. 单文件零依赖，双击即用，不需要任何服务端
 
 ## 渲染陷阱（必读踩坑清单）
 

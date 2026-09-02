@@ -163,7 +163,8 @@ def cmd_render(args):
     n = len(notes["notes"]) if notes else 0
     print(f"tushi 完成: {index}")
     print(f"  底图 {out_puml.stem}.svg · 白话注释 {n} 条 · 单文件 {len(html) // 1024}KB")
-    print(f"  交付: 用浏览器打开 index.html（或部署后给 URL）")
+    print(f"  交付: {index}")
+    print(f"  单文件零依赖，本地双击打开即可。禁止启动 HTTP 服务。")
 
 
 def main():
