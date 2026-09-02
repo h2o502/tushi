@@ -6,7 +6,7 @@
 
 ## 30 秒看懂工作管线
 
-![tushi 工作管线](docs/demo/tushi.svg)
+![tushi 工作管线](docs/tushi.svg)
 
 - **LLM 职责**：内容 → PlantUML DSL + 白话 notes（不改写内容）
 - **渲染职责**：PlantUML 确定性引擎（本地 CPU 免费，毫秒级）
